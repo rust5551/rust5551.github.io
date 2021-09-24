@@ -3,7 +3,6 @@ var gdjs;
   const PIXI = GlobalPIXIModule.PIXI;
   class LayerPixiRenderer {
     constructor(layer, runtimeSceneRenderer) {
-      this._filters = {};
       this._renderTexture = null;
       this._lightingSprite = null;
       this._oldWidth = null;
@@ -44,43 +43,10 @@ var gdjs;
     updateVisibility(visible) {
       this._pixiContainer.visible = !!visible;
     }
-    update() {
+    updatePreRender() {
       if (this._renderTexture) {
         this._updateRenderTexture();
       }
-      for (const filterName in this._filters) {
-        const filter = this._filters[filterName];
-        filter.update(filter.pixiFilter, this._layer);
-      }
-    }
-    addEffect(effectData) {
-      const filterCreator = gdjs2.PixiFiltersTools.getFilterCreator(effectData.effectType);
-      if (!filterCreator) {
-        console.log('Filter "' + effectData.name + '" has an unknown effect type: "' + effectData.effectType + '". Was it registered properly? Is the effect type correct?');
-        return;
-      }
-      const filter = {
-        pixiFilter: filterCreator.makePIXIFilter(this._layer, effectData),
-        updateDoubleParameter: filterCreator.updateDoubleParameter,
-        updateStringParameter: filterCreator.updateStringParameter,
-        updateBooleanParameter: filterCreator.updateBooleanParameter,
-        update: filterCreator.update
-      };
-      if (this._isLightingLayer) {
-        filter.pixiFilter.blendMode = PIXI.BLEND_MODES.ADD;
-      }
-      this._pixiContainer.filters = (this._pixiContainer.filters || []).concat(filter.pixiFilter);
-      this._filters[effectData.name] = filter;
-    }
-    removeEffect(effectName) {
-      const filter = this._filters[effectName];
-      if (!filter) {
-        return;
-      }
-      this._pixiContainer.filters = (this._pixiContainer.filters || []).filter(function(pixiFilter) {
-        return pixiFilter !== filter.pixiFilter;
-      });
-      delete this._filters[effectName];
     }
     addRendererObject(child, zOrder) {
       child.zOrder = zOrder;
@@ -98,44 +64,6 @@ var gdjs;
     }
     removeRendererObject(child) {
       this._pixiContainer.removeChild(child);
-    }
-    setEffectDoubleParameter(name, parameterName, value) {
-      const filter = this._filters[name];
-      if (!filter) {
-        return;
-      }
-      filter.updateDoubleParameter(filter.pixiFilter, parameterName, value);
-    }
-    setEffectStringParameter(name, parameterName, value) {
-      const filter = this._filters[name];
-      if (!filter) {
-        return;
-      }
-      filter.updateStringParameter(filter.pixiFilter, parameterName, value);
-    }
-    setEffectBooleanParameter(name, parameterName, value) {
-      const filter = this._filters[name];
-      if (!filter) {
-        return;
-      }
-      filter.updateBooleanParameter(filter.pixiFilter, parameterName, value);
-    }
-    hasEffect(name) {
-      return !!this._filters[name];
-    }
-    enableEffect(name, value) {
-      const filter = this._filters[name];
-      if (!filter) {
-        return;
-      }
-      gdjs2.PixiFiltersTools.enableEffect(filter, value);
-    }
-    isEffectEnabled(name) {
-      const filter = this._filters[name];
-      if (!filter) {
-        return false;
-      }
-      return gdjs2.PixiFiltersTools.isEffectEnabled(filter);
     }
     updateClearColor() {
       this._clearColor = this._layer.getClearColor();

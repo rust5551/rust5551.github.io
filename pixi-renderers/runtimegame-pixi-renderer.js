@@ -38,6 +38,9 @@ var gdjs;
         this._pixiRenderer.view.style["image-rendering"] = "-webkit-crisp-edges";
         this._pixiRenderer.view.style["image-rendering"] = "pixelated";
       }
+      if (this._game.getPixelsRounding()) {
+        PIXI.settings.ROUND_PIXELS = true;
+      }
       const that = this;
       window.addEventListener("resize", function() {
         that._game.onWindowInnerSizeChanged();

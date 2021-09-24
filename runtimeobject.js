@@ -19,6 +19,7 @@ var gdjs;
       this._defaultHitBoxes = [];
       this.hitBoxesDirty = true;
       this.aabb = {min: [0, 0], max: [0, 0]};
+      this._rendererEffects = {};
       this._forces = [];
       this._behaviors = [];
       this.getVariableNumber = RuntimeObject2.getVariableNumber;
@@ -46,6 +47,10 @@ var gdjs;
       this._variables = new gdjs2.VariablesContainer(objectData ? objectData.variables : void 0);
       this._averageForce = new gdjs2.Force(0, 0, 0);
       this._behaviorsTable = new Hashtable();
+      for (let i = 0; i < objectData.effects.length; ++i) {
+        this._runtimeScene.getGame().getEffectsManager().initializeEffect(objectData.effects[i], this._rendererEffects, this);
+        this.updateAllEffectParameters(objectData.effects[i]);
+      }
       for (let i = 0, len = objectData.behaviors.length; i < len; ++i) {
         const autoData = objectData.behaviors[i];
         const Ctor = gdjs2.getBehaviorConstructor(autoData.type);
@@ -55,6 +60,9 @@ var gdjs;
       this._timers = new Hashtable();
     }
     onCreated() {
+      for (const effectName in this._rendererEffects) {
+        this._runtimeScene.getGame().getEffectsManager().applyEffect(this.getRendererObject(), this._rendererEffects[effectName]);
+      }
       for (let i = 0; i < this._behaviors.length; ++i) {
         this._behaviors[i].onCreated();
       }
@@ -94,8 +102,11 @@ var gdjs;
       this._timers.clear();
     }
     getElapsedTime(runtimeScene) {
-      const theLayer = runtimeScene.getLayer(this.layer);
+      const theLayer = this._runtimeScene.getLayer(this.layer);
       return theLayer.getElapsedTime();
+    }
+    getRuntimeScene() {
+      return this._runtimeScene;
     }
     update(runtimeScene) {
     }
@@ -260,6 +271,36 @@ var gdjs;
     }
     hasVariable(name) {
       return this._variables.has(name);
+    }
+    getRendererEffects() {
+      return this._rendererEffects;
+    }
+    addEffect(effectData) {
+      return this._runtimeScene.getGame().getEffectsManager().addEffect(effectData, this._rendererEffects, this.getRendererObject(), this);
+    }
+    removeEffect(effectName) {
+      return this._runtimeScene.getGame().getEffectsManager().removeEffect(this._rendererEffects, this.getRendererObject(), effectName);
+    }
+    setEffectDoubleParameter(name, parameterName, value) {
+      return this._runtimeScene.getGame().getEffectsManager().setEffectDoubleParameter(this._rendererEffects, name, parameterName, value);
+    }
+    setEffectStringParameter(name, parameterName, value) {
+      return this._runtimeScene.getGame().getEffectsManager().setEffectStringParameter(this._rendererEffects, name, parameterName, value);
+    }
+    setEffectBooleanParameter(name, parameterName, value) {
+      return this._runtimeScene.getGame().getEffectsManager().setEffectBooleanParameter(this._rendererEffects, name, parameterName, value);
+    }
+    updateAllEffectParameters(effectData) {
+      return this._runtimeScene.getGame().getEffectsManager().updateAllEffectParameters(this._rendererEffects, effectData);
+    }
+    enableEffect(name, enable) {
+      this._runtimeScene.getGame().getEffectsManager().enableEffect(this._rendererEffects, name, enable);
+    }
+    isEffectEnabled(name) {
+      return this._runtimeScene.getGame().getEffectsManager().isEffectEnabled(this._rendererEffects, name);
+    }
+    hasEffect(name) {
+      return this._runtimeScene.getGame().getEffectsManager().hasEffect(this._rendererEffects, name);
     }
     hide(enable) {
       if (enable === void 0) {

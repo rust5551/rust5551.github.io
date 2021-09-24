@@ -272,16 +272,16 @@ var gdjs;
         this._profiler.end("callbacks and extensions (post-events)");
       }
       if (this._profiler) {
-        this._profiler.begin("objects (pre-render)");
+        this._profiler.begin("objects (pre-render, effects update)");
       }
       this._updateObjectsPreRender();
       if (this._profiler) {
-        this._profiler.end("objects (pre-render)");
+        this._profiler.end("objects (pre-render, effects update)");
       }
       if (this._profiler) {
         this._profiler.begin("layers (effects update)");
       }
-      this._updateLayers();
+      this._updateLayersPreRender();
       if (this._profiler) {
         this._profiler.end("layers (effects update)");
       }
@@ -318,11 +318,11 @@ var gdjs;
         }
       }
     }
-    _updateLayers() {
+    _updateLayersPreRender() {
       for (const name in this._layers.items) {
         if (this._layers.items.hasOwnProperty(name)) {
-          const theLayer = this._layers.items[name];
-          theLayer.update(this);
+          const layer = this._layers.items[name];
+          layer.updatePreRender(this);
         }
       }
     }
@@ -333,7 +333,10 @@ var gdjs;
           const object = this._allInstancesList[i];
           const rendererObject = object.getRendererObject();
           if (rendererObject) {
-            object.getRendererObject().visible = !object.isHidden();
+            rendererObject.visible = !object.isHidden();
+            if (rendererObject.visible) {
+              this._runtimeGame.getEffectsManager().updatePreRender(object.getRendererEffects(), object);
+            }
           }
           object.updatePreRender(this);
         }
@@ -357,6 +360,9 @@ var gdjs;
             } else {
               rendererObject.visible = true;
             }
+          }
+          if (rendererObject.visible) {
+            this._runtimeGame.getEffectsManager().updatePreRender(object.getRendererEffects(), object);
           }
           object.updatePreRender(this);
         }

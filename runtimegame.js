@@ -14,6 +14,7 @@ var gdjs;
       this._fontManager = new gdjs2.FontManager(this._data.resources.resources);
       this._jsonManager = new gdjs2.JsonManager(this._data.resources.resources);
       this._bitmapFontManager = new gdjs2.BitmapFontManager(this._data.resources.resources, this._imageManager);
+      this._effectsManager = new gdjs2.EffectsManager();
       this._maxFPS = this._data ? this._data.properties.maxFPS : 60;
       this._minFPS = this._data ? this._data.properties.minFPS : 15;
       this._gameResolutionWidth = this._data.properties.windowWidth;
@@ -23,6 +24,7 @@ var gdjs;
       this._resizeMode = this._data.properties.sizeOnStartupMode;
       this._adaptGameResolutionAtRuntime = this._data.properties.adaptGameResolutionAtRuntime;
       this._scaleMode = data.properties.scaleMode || "linear";
+      this._pixelsRounding = this._data.properties.pixelsRounding;
       this._renderer = new gdjs2.RuntimeGameRenderer(this, this._options.forceFullscreen || false);
       this._sceneStack = new gdjs2.SceneStack(this);
       this._inputManager = new gdjs2.InputManager();
@@ -64,6 +66,9 @@ var gdjs;
     }
     getJsonManager() {
       return this._jsonManager;
+    }
+    getEffectsManager() {
+      return this._effectsManager;
     }
     getGameData() {
       return this._data;
@@ -160,6 +165,9 @@ var gdjs;
     }
     getScaleMode() {
       return this._scaleMode;
+    }
+    getPixelsRounding() {
+      return this._pixelsRounding;
     }
     pause(enable) {
       this._paused = enable;

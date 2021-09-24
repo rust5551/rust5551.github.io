@@ -27,6 +27,17 @@ var gdjs;
       hexNumber & 255
     ];
   };
+  gdjs2.rgbOrHexToRGBColor = function(value) {
+    const splitValue = value.split(";");
+    if (splitValue.length === 3) {
+      return [
+        parseInt(splitValue[0], 10),
+        parseInt(splitValue[1], 10),
+        parseInt(splitValue[2], 10)
+      ];
+    }
+    return gdjs2.hexToRGBColor(value);
+  };
   gdjs2.rgbToHexNumber = function(r, g, b) {
     return (r << 16) + (g << 8) + b;
   };

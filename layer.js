@@ -6,6 +6,7 @@ var gdjs;
       this._zoomFactor = 1;
       this._timeScale = 1;
       this._defaultZOrder = 0;
+      this._rendererEffects = {};
       this._name = layerData.name;
       this._hidden = !layerData.visibility;
       this._initialEffectsData = layerData.effects || [];
@@ -14,6 +15,7 @@ var gdjs;
       this._cachedGameResolutionWidth = runtimeScene.getGame().getGameResolutionWidth();
       this._cachedGameResolutionHeight = runtimeScene.getGame().getGameResolutionHeight();
       this._runtimeScene = runtimeScene;
+      this._effectsManager = runtimeScene.getGame().getEffectsManager();
       this._isLightingLayer = layerData.isLightingLayer;
       this._followBaseLayerCamera = layerData.followBaseLayerCamera;
       this._clearColor = [
@@ -49,11 +51,12 @@ var gdjs;
     getRuntimeScene() {
       return this._runtimeScene;
     }
-    update(runtimeScene) {
+    updatePreRender(runtimeScene) {
       if (this._followBaseLayerCamera) {
         this.followBaseLayer();
       }
-      return this._renderer.update();
+      this._renderer.updatePreRender();
+      this._effectsManager.updatePreRender(this._rendererEffects, this);
     }
     getName() {
       return this._name;
@@ -138,37 +141,28 @@ var gdjs;
       return this._initialEffectsData;
     }
     addEffect(effectData) {
-      this._renderer.addEffect(effectData);
-      for (let name in effectData.doubleParameters) {
-        this.setEffectDoubleParameter(effectData.name, name, effectData.doubleParameters[name]);
-      }
-      for (let name in effectData.stringParameters) {
-        this.setEffectStringParameter(effectData.name, name, effectData.stringParameters[name]);
-      }
-      for (let name in effectData.booleanParameters) {
-        this.setEffectBooleanParameter(effectData.name, name, effectData.booleanParameters[name]);
-      }
+      this._effectsManager.addEffect(effectData, this._rendererEffects, this._renderer.getRendererObject(), this);
     }
     removeEffect(effectName) {
-      this._renderer.removeEffect(effectName);
+      this._effectsManager.removeEffect(this._rendererEffects, this._renderer.getRendererObject(), effectName);
     }
     setEffectDoubleParameter(name, parameterName, value) {
-      return this._renderer.setEffectDoubleParameter(name, parameterName, value);
+      this._effectsManager.setEffectDoubleParameter(this._rendererEffects, name, parameterName, value);
     }
     setEffectStringParameter(name, parameterName, value) {
-      return this._renderer.setEffectStringParameter(name, parameterName, value);
+      this._effectsManager.setEffectStringParameter(this._rendererEffects, name, parameterName, value);
     }
     setEffectBooleanParameter(name, parameterName, value) {
-      return this._renderer.setEffectBooleanParameter(name, parameterName, value);
+      this._effectsManager.setEffectBooleanParameter(this._rendererEffects, name, parameterName, value);
     }
     enableEffect(name, enable) {
-      this._renderer.enableEffect(name, enable);
+      this._effectsManager.enableEffect(this._rendererEffects, name, enable);
     }
     isEffectEnabled(name) {
-      return this._renderer.isEffectEnabled(name);
+      return this._effectsManager.isEffectEnabled(this._rendererEffects, name);
     }
     hasEffect(name) {
-      return this._renderer.hasEffect(name);
+      return this._effectsManager.hasEffect(this._rendererEffects, name);
     }
     setTimeScale(timeScale) {
       if (timeScale >= 0) {
@@ -178,8 +172,9 @@ var gdjs;
     getTimeScale() {
       return this._timeScale;
     }
-    getElapsedTime() {
-      return this._runtimeScene.getTimeManager().getElapsedTime() * this._timeScale;
+    getElapsedTime(runtimeScene) {
+      runtimeScene = runtimeScene || this._runtimeScene;
+      return runtimeScene.getTimeManager().getElapsedTime() * this._timeScale;
     }
     followBaseLayer() {
       const baseLayer = this._runtimeScene.getLayer("");

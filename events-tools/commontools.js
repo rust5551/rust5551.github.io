@@ -4,48 +4,6 @@ var gdjs;
   (function(evtTools2) {
     let common;
     (function(common2) {
-      common2.getVariableNumber = function(variable) {
-        return variable.getAsNumber();
-      };
-      common2.getVariableString = function(variable) {
-        return variable.getAsString();
-      };
-      common2.getVariableBoolean = function(variable, compareWith) {
-        return variable.getAsBoolean() === compareWith;
-      };
-      common2.setVariableBoolean = function(variable, newValue) {
-        variable.setBoolean(newValue);
-      };
-      common2.toggleVariableBoolean = function(variable) {
-        variable.setBoolean(!variable.getAsBoolean());
-      };
-      common2.sceneVariableExists = function(runtimeScene, variableName) {
-        return runtimeScene.getVariables().has(variableName);
-      };
-      common2.globalVariableExists = function(runtimeScene, variableName) {
-        return runtimeScene.getGame().getVariables().has(variableName);
-      };
-      common2.variableChildExists = function(variable, childName) {
-        return variable.hasChild(childName);
-      };
-      common2.variableRemoveChild = function(variable, childName) {
-        variable.removeChild(childName);
-      };
-      common2.variableClearChildren = function(variable) {
-        variable.clearChildren();
-      };
-      common2.variablePushCopy = function(array, variable) {
-        array.pushVariableCopy(variable);
-      };
-      common2.valuePush = function(array, value) {
-        array.pushValue(value);
-      };
-      common2.variableRemoveAt = function(array, index) {
-        array.removeAtIndex(index);
-      };
-      common2.getVariableChildCount = function(variable) {
-        return variable.getChildrenCount();
-      };
       common2.toNumber = function(str) {
         return parseFloat(str);
       };
