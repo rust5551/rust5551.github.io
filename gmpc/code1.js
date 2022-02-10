@@ -45,6 +45,8 @@ gdjs.Main_32gameCode.GDscorenumdvObjects1= [];
 gdjs.Main_32gameCode.GDscorenumdvObjects2= [];
 gdjs.Main_32gameCode.GDscorenumgrObjects1= [];
 gdjs.Main_32gameCode.GDscorenumgrObjects2= [];
+gdjs.Main_32gameCode.GDerorObjects1= [];
+gdjs.Main_32gameCode.GDerorObjects2= [];
 
 gdjs.Main_32gameCode.conditionTrue_0 = {val:false};
 gdjs.Main_32gameCode.condition0IsTrue_0 = {val:false};
@@ -65,6 +67,7 @@ gdjs.Main_32gameCode.condition0IsTrue_0.val = false;
 {
 gdjs.Main_32gameCode.condition0IsTrue_0.val = gdjs.evtTools.runtimeScene.sceneJustBegins(runtimeScene);
 }if (gdjs.Main_32gameCode.condition0IsTrue_0.val) {
+gdjs.copyArray(runtimeScene.getObjects("eror"), gdjs.Main_32gameCode.GDerorObjects1);
 gdjs.Main_32gameCode.GDcolliderObjects1.length = 0;
 
 gdjs.Main_32gameCode.GDcollider2Objects1.length = 0;
@@ -102,6 +105,9 @@ gdjs.Main_32gameCode.GDreObjects1.length = 0;
     gdjs.Main_32gameCode.GDcollider2Objects1[i].setPosition((( gdjs.Main_32gameCode.GDreObjects1.length === 0 ) ? 0 :gdjs.Main_32gameCode.GDreObjects1[0].getCenterXInScene()) - (gdjs.Main_32gameCode.GDcollider2Objects1[i].getWidth()) / 2,(( gdjs.Main_32gameCode.GDreObjects1.length === 0 ) ? 0 :gdjs.Main_32gameCode.GDreObjects1[0].getCenterYInScene()) - (gdjs.Main_32gameCode.GDcollider2Objects1[i].getHeight()) / 2);
 }
 }{gdjs.evtTools.variable.setVariableBoolean(runtimeScene.getVariables().get("gron"), true);
+}{for(var i = 0, len = gdjs.Main_32gameCode.GDerorObjects1.length ;i < len;++i) {
+    gdjs.Main_32gameCode.GDerorObjects1[i].setString("");
+}
 }}
 
 }
@@ -876,6 +882,38 @@ gdjs.copyArray(runtimeScene.getObjects("placeable"), gdjs.Main_32gameCode.GDplac
 }
 
 
+{
+
+
+gdjs.Main_32gameCode.condition0IsTrue_0.val = false;
+{
+gdjs.Main_32gameCode.condition0IsTrue_0.val = gdjs.evtTools.p2p.onError();
+}if (gdjs.Main_32gameCode.condition0IsTrue_0.val) {
+gdjs.copyArray(runtimeScene.getObjects("eror"), gdjs.Main_32gameCode.GDerorObjects1);
+{for(var i = 0, len = gdjs.Main_32gameCode.GDerorObjects1.length ;i < len;++i) {
+    gdjs.Main_32gameCode.GDerorObjects1[i].setString(gdjs.evtTools.p2p.getLastError());
+}
+}}
+
+}
+
+
+{
+
+
+gdjs.Main_32gameCode.condition0IsTrue_0.val = false;
+{
+gdjs.Main_32gameCode.condition0IsTrue_0.val = gdjs.evtTools.p2p.onDisconnect();
+}if (gdjs.Main_32gameCode.condition0IsTrue_0.val) {
+gdjs.copyArray(runtimeScene.getObjects("eror"), gdjs.Main_32gameCode.GDerorObjects1);
+{for(var i = 0, len = gdjs.Main_32gameCode.GDerorObjects1.length ;i < len;++i) {
+    gdjs.Main_32gameCode.GDerorObjects1[i].setString("Соперник покинул игру");
+}
+}}
+
+}
+
+
 };
 
 gdjs.Main_32gameCode.func = function(runtimeScene) {
@@ -927,6 +965,8 @@ gdjs.Main_32gameCode.GDscorenumdvObjects1.length = 0;
 gdjs.Main_32gameCode.GDscorenumdvObjects2.length = 0;
 gdjs.Main_32gameCode.GDscorenumgrObjects1.length = 0;
 gdjs.Main_32gameCode.GDscorenumgrObjects2.length = 0;
+gdjs.Main_32gameCode.GDerorObjects1.length = 0;
+gdjs.Main_32gameCode.GDerorObjects2.length = 0;
 
 gdjs.Main_32gameCode.eventsList0(runtimeScene);
 return;
