@@ -118,7 +118,7 @@ gdjs.ConnectCode.condition0IsTrue_0.val = gdjs.evtTools.p2p.isReady();
 }if ( gdjs.ConnectCode.condition0IsTrue_0.val ) {
 {
 {gdjs.ConnectCode.conditionTrue_1 = gdjs.ConnectCode.condition1IsTrue_0;
-gdjs.ConnectCode.conditionTrue_1.val = runtimeScene.getOnceTriggers().triggerOnce(8677444);
+gdjs.ConnectCode.conditionTrue_1.val = runtimeScene.getOnceTriggers().triggerOnce(8708612);
 }
 }}
 if (gdjs.ConnectCode.condition1IsTrue_0.val) {
@@ -141,7 +141,7 @@ gdjs.ConnectCode.condition0IsTrue_0.val = !(gdjs.evtTools.p2p.isReady());
 }if ( gdjs.ConnectCode.condition0IsTrue_0.val ) {
 {
 {gdjs.ConnectCode.conditionTrue_1 = gdjs.ConnectCode.condition1IsTrue_0;
-gdjs.ConnectCode.conditionTrue_1.val = runtimeScene.getOnceTriggers().triggerOnce(8678292);
+gdjs.ConnectCode.conditionTrue_1.val = runtimeScene.getOnceTriggers().triggerOnce(8709460);
 }
 }}
 if (gdjs.ConnectCode.condition1IsTrue_0.val) {
@@ -206,7 +206,7 @@ gdjs.copyArray(gdjs.ConnectCode.GDConnectButtonObjects1_1final, gdjs.ConnectCode
 }if ( gdjs.ConnectCode.condition0IsTrue_0.val ) {
 {
 {gdjs.ConnectCode.conditionTrue_1 = gdjs.ConnectCode.condition1IsTrue_0;
-gdjs.ConnectCode.conditionTrue_1.val = runtimeScene.getOnceTriggers().triggerOnce(8679932);
+gdjs.ConnectCode.conditionTrue_1.val = runtimeScene.getOnceTriggers().triggerOnce(8711100);
 }
 }}
 if (gdjs.ConnectCode.condition1IsTrue_0.val) {
@@ -305,7 +305,7 @@ gdjs.ConnectCode.condition0IsTrue_0.val = gdjs.evtTools.input.isMouseButtonPress
 }if ( gdjs.ConnectCode.condition0IsTrue_0.val ) {
 {
 {gdjs.ConnectCode.conditionTrue_1 = gdjs.ConnectCode.condition1IsTrue_0;
-gdjs.ConnectCode.conditionTrue_1.val = runtimeScene.getOnceTriggers().triggerOnce(8684020);
+gdjs.ConnectCode.conditionTrue_1.val = runtimeScene.getOnceTriggers().triggerOnce(8715188);
 }
 }}
 if (gdjs.ConnectCode.condition1IsTrue_0.val) {
