@@ -329,6 +329,9 @@ gdjs.Main_32gameCode.GDgrObjects1.length = 0;
 }{for(var i = 0, len = gdjs.Main_32gameCode.GDscorenumgrObjects1.length ;i < len;++i) {
     gdjs.Main_32gameCode.GDscorenumgrObjects1[i].setString(gdjs.evtTools.common.toString(gdjs.evtTools.common.toNumber((gdjs.Main_32gameCode.GDscorenumgrObjects1[i].getString())) + (( gdjs.Main_32gameCode.GDgrObjects1.length === 0 ) ? 0 :gdjs.Main_32gameCode.GDgrObjects1[0].getWidth()) / 16 + (( gdjs.Main_32gameCode.GDgrObjects1.length === 0 ) ? 0 :gdjs.Main_32gameCode.GDgrObjects1[0].getHeight()) / 16));
 }
+}{for(var i = 0, len = gdjs.Main_32gameCode.GDscorenumgrObjects1.length ;i < len;++i) {
+    gdjs.Main_32gameCode.GDscorenumgrObjects1[i].setPosition(1100 - (gdjs.Main_32gameCode.GDscorenumgrObjects1[i].getWidth()) / 2,940);
+}
 }}
 
 }
