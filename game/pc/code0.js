@@ -286,7 +286,7 @@ gdjs.ConnectCode.condition0IsTrue_0.val = gdjs.evtTools.input.cursorOnObject(gdj
 }if (gdjs.ConnectCode.condition0IsTrue_0.val) {
 gdjs.copyArray(runtimeScene.getObjects("idEntry"), gdjs.ConnectCode.GDidEntryObjects1);
 {for(var i = 0, len = gdjs.ConnectCode.GDidEntryObjects1.length ;i < len;++i) {
-    gdjs.ConnectCode.GDidEntryObjects1[i].setString(gdjs.ConnectCode.GDidEntryObjects1[i].getString() + (gdjs.evtsExt__Clipboard__ReadText.func(runtimeScene, (typeof eventsFunctionContext !== 'undefined' ? eventsFunctionContext : undefined))));
+    gdjs.ConnectCode.GDidEntryObjects1[i].setString(gdjs.evtsExt__Clipboard__ReadText.func(runtimeScene, (typeof eventsFunctionContext !== 'undefined' ? eventsFunctionContext : undefined)));
 }
 }}
 
